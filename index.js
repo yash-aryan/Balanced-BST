@@ -1,6 +1,9 @@
 'use strict';
 
-function buildTree(inputArr) {
+function Tree(inputArr) {
+	const sortedArr = mergesortArray(inputArr);
+	const rootNode = buildTree(sortedArr, 0, sortedArr.length - 1);
+
 	function mergesortArray(arr) {
 		if (arr.length === 1) return arr;
 
@@ -31,29 +34,31 @@ function buildTree(inputArr) {
 		};
 	}
 
-	function Tree(sortedArr, start, end) {
+	function buildTree(sortedArr, start, end) {
 		if (start > end) return null;
 
 		const mid = Math.floor((start + end) / 2);
 		const midNode = Node(sortedArr[mid]);
-		midNode.left = Tree(sortedArr, start, mid - 1);
-		midNode.right = Tree(sortedArr, mid + 1, end);
+		midNode.left = buildTree(sortedArr, start, mid - 1);
+		midNode.right = buildTree(sortedArr, mid + 1, end);
 		return midNode;
 	}
 
-	const sortedArr = mergesortArray(inputArr);
-	return Tree(sortedArr, 0, sortedArr.length - 1);
-}
+	function prettyPrint(node = rootNode, prefix = '', isLeft = true) {
+		if (node === null) {
+			return;
+		}
+		if (node.right !== null) {
+			prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
+		}
+		console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.value}`);
+		if (node.left !== null) {
+			prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
+		}
+	}
 
-const prettyPrint = (node, prefix = '', isLeft = true) => {
-	if (node === null) {
-		return;
-	}
-	if (node.right !== null) {
-		prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
-	}
-	console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.value}`);
-	if (node.left !== null) {
-		prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
-	}
-};
+	return {
+		rootNode,
+		prettyPrint,
+	};
+}
