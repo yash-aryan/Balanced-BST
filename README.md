@@ -6,11 +6,11 @@ In this practice project I created a factory function that inputs unsorted array
 - The prettyprint function is NOT MINE, and was given in the course to just display a nice visual represantation of the Balanced BST in console based on the root node.
 
 # Project Status
-- [*] Remove duplicate elements from the input array.
-- [*] Sort the input array.
-- [*] Create the core buildTree function to create a Balanced BST.
-- [ ] Create function to insert & delete a node with a big O(log n) time complexity.
-- [ ] Create a find function to returns the node object of the input value.
+- [x] Remove duplicate elements from the input array.
+- [x] Sort the input array.
+- [x] Create the core buildTree function to create a Balanced BST.
+- [x] Create function to insert & delete a node with a big O(log n) time complexity.
+- [x] Create a find function to returns the node object of the input value.
 - [ ] Create a levelOrder function to that inputs a callback function and uses each node in breadth-first order as the parameter for the callback function. If no callback function is given, then it returns an array in Breadth-first order.
 - [ ] Similarly, create inorder, pre-order, post-order functions.
 - [ ] Create a function called "height", which inputs a node and returns it's height number from the root node.
