@@ -98,7 +98,7 @@ function Tree(inputArr = null) {
 				removeTargetWhenSingleChild(parentNode, isTargetOnLeft, true);
 			} else if (targetNode.right) {
 				removeTargetWhenSingleChild(parentNode, isTargetOnLeft, false);
-			} else debugger;
+			}
 
 			function removeTargetWhenSingleChild(parentNode, isTargetOnLeft, isChildOnLeft) {
 				if (isTargetOnLeft && isChildOnLeft) parentNode.left = parentNode.left.left;
@@ -131,6 +131,36 @@ function Tree(inputArr = null) {
 					return getNextBiggestNode(midNode.left);
 				}
 			}
+		}
+	}
+
+	function levelOrder(callback) {
+		const orderedArr = [];
+		const queue = [rootNode];
+		while (queue.length !== 0) {
+			const currNode = queue.shift();
+			if (callback) callback(currNode);
+			orderedArr.push(currNode);
+			if (currNode.left) queue.push(currNode.left);
+			if (currNode.right) queue.push(currNode.right);
+		}
+
+		if (!callback) return orderedArr;
+	}
+
+	function levelOrderRecursion(callback) {
+		const orderedArr = [];
+		const queue = [rootNode];
+		traverse(queue.shift());
+		if (!callback) return orderedArr;
+
+		function traverse(midNode) {
+			if (!midNode) return;
+			if (callback) callback(midNode);
+			orderedArr.push(midNode);
+			if (midNode.left) queue.push(midNode.left);
+			if (midNode.right) queue.push(midNode.right);
+			traverse(queue.shift());
 		}
 	}
 
@@ -180,5 +210,7 @@ function Tree(inputArr = null) {
 		find,
 		insert,
 		remove,
+		levelOrder,
+		levelOrderRecursion,
 	};
 }

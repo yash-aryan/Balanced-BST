@@ -11,7 +11,7 @@ In this practice project I created a factory function that inputs unsorted array
 - [x] Create the core buildTree function to create a Balanced BST.
 - [x] Create function to insert & delete a node with a big O(log n) time complexity.
 - [x] Create a find function to returns the node object of the input value.
-- [ ] Create a levelOrder function to that inputs a callback function and uses each node in breadth-first order as the parameter for the callback function. If no callback function is given, then it returns an array in Breadth-first order.
+- [x] Create a levelOrder function to that inputs a callback function and uses each node in breadth-first order as the parameter for the callback function. If no callback function is given, then it returns an array in Breadth-first order.
 - [ ] Similarly, create inorder, pre-order, post-order functions.
 - [ ] Create a function called "height", which inputs a node and returns it's height number from the root node.
 - [ ] Similarly create a function called "depth".
