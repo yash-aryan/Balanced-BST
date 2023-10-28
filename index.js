@@ -164,6 +164,106 @@ function Tree(inputArr = null) {
 		}
 	}
 
+	function inorder(callback) {
+		const orderedArr = [];
+		traverse(rootNode);
+		if (!callback) return orderedArr;
+
+		function traverse(midNode) {
+			if (!midNode) return;
+			traverse(midNode.left);
+			if (callback) callback(midNode);
+			orderedArr.push(midNode);
+			traverse(midNode.right);
+		}
+	}
+
+	function preorder(callback) {
+		const orderedArr = [];
+		traverse(rootNode);
+		if (!callback) return orderedArr;
+
+		function traverse(midNode) {
+			if (!midNode) return;
+			if (callback) callback(midNode);
+			orderedArr.push(midNode);
+			traverse(midNode.left);
+			traverse(midNode.right);
+		}
+	}
+
+	function postorder(callback) {
+		const orderedArr = [];
+		traverse(rootNode);
+		if (!callback) return orderedArr;
+
+		function traverse(midNode) {
+			if (!midNode) return;
+			traverse(midNode.left);
+			traverse(midNode.right);
+			if (callback) callback(midNode);
+			orderedArr.push(midNode);
+		}
+	}
+
+	function height(targetNode) {
+		return traverse(targetNode) - 1;
+		function traverse(midNode) {
+			if (!midNode) return 0;
+			const leftHeight = traverse(midNode.left);
+			const rightHeight = traverse(midNode.right);
+			return Math.max(leftHeight, rightHeight) + 1;
+		}
+	}
+
+	function depth(targetNode) {
+		if (!targetNode) return console.log('Node not found');
+		let i = 0;
+		return traverse(rootNode);
+
+		function traverse(midNode) {
+			if (midNode.value === targetNode.value) return i;
+			++i;
+			if (targetNode.value < midNode.value) return traverse(midNode.left);
+			if (targetNode.value > midNode.value) return traverse(midNode.right);
+		}
+	}
+
+	function isBalanced() {
+		let leftHeight, rightHeight;
+		const queue = [rootNode];
+		while (queue.length !== 0) {
+			const currNode = queue.shift();
+			if (currNode.left) leftHeight = height(currNode.left);
+			else leftHeight = -1;
+			if (currNode.right) rightHeight = height(currNode.right);
+			else rightHeight = -1;
+
+			if (isHeightBalanced(leftHeight, rightHeight)) {
+				if (currNode.left) queue.push(currNode.left);
+				if (currNode.right) queue.push(currNode.right);
+			} else return false;
+		}
+
+		return true;
+
+		function isHeightBalanced(left, right) {
+			if (left === right || left - right === 1 || right - left === 1) return true;
+			return false;
+		}
+	}
+
+	function rebalance() {
+		if (isBalanced()) return console.log('Tree is already balanced');
+
+		sortedArr.length = 0;
+		inorder(node => sortedArr.push(node.value));
+		const newRootNode = buildTree(sortedArr, 0, sortedArr.length - 1);
+		rootNode.value = newRootNode.value;
+		rootNode.left = newRootNode.left;
+		rootNode.right = newRootNode.right;
+	}
+
 	function mergesortArray(arr) {
 		if (arr.length === 1) return arr;
 
@@ -212,5 +312,12 @@ function Tree(inputArr = null) {
 		remove,
 		levelOrder,
 		levelOrderRecursion,
+		inorder,
+		preorder,
+		postorder,
+		height,
+		depth,
+		isBalanced,
+		rebalance,
 	};
 }
